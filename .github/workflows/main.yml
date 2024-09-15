@@ -26,4 +26,4 @@ jobs:
 
       - name: Sync files to S3
         run: |
-          aws s3 sync ./build s3://your-bucket-name --delete
+          aws s3 sync ./build s3://assignment1-mlops --delete
