@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -20,6 +20,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
+      - name: Build Application
+        run: |
+          python setup.py sdist
+
+      - name: List build directory
+        run: ls -al ./dist
+
       - name: Sync files to S3
         run: |
-          aws s3 sync ./build s3://assignment1-mlops --delete
+          if [ -d "./dist" ]; then
+            aws s3 sync ./dist s3://assignment1-mlops --delete
+          else
+            echo "Directory ./dist does not exist."
+            exit 1
+          fi
