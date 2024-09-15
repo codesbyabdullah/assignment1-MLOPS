@@ -1,0 +1,7 @@
+*.log
+__pycache__/
+.git/
+.venv/
+venv/
+dataset/
+model.pkl  # If the model is large, consider handling it separately
